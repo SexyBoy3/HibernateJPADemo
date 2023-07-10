@@ -1,0 +1,94 @@
+package org.example;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import org.example.models.Group;
+import org.example.models.Student;
+
+
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+
+        try (EntityManagerFactory emf = Persistence.createEntityManagerFactory("hibernate_jpa_demo");
+             EntityManager em = emf.createEntityManager()) {
+
+
+            Student s1 = new Student("Petr Ivanov");
+            Student s2 = new Student("Ivan Petrov");
+            Group g1 = new Group("UVP-211");
+            Group g2 = new Group("UVP-212");
+
+            System.out.printf("Student: %s%n", s1);
+            System.out.printf("Student: %s%n", s2);
+            System.out.printf("Group: %s%n", g1);
+            System.out.printf("Group: %s%n", g2);
+
+            s1.setGroup(g1);
+            s2.setGroup(g2);
+
+            try {
+                em.getTransaction().begin();
+                em.persist(s1);
+                em.persist(s2);
+                em.getTransaction().commit();
+            } catch (Exception e) {
+                if (em.getTransaction() != null)
+                    em.getTransaction().rollback();
+                throw e;
+            }
+
+            System.out.printf("Student: %s%n", s1);
+            System.out.printf("Student: %s%n", s2);
+            System.out.printf("Group: %s%n", g1);
+            System.out.printf("Group: %s%n", g2);
+
+            try {
+                em.getTransaction().begin();
+                Student result = (Student) em.find(Student.class, 1);
+                em.getTransaction().commit();
+                System.out.printf("Student: %s%n", result);
+            } catch (Exception e) {
+                if (em.getTransaction() != null)
+                    em.getTransaction().rollback();
+                throw e;
+            }
+
+
+            try {
+                em.getTransaction().begin();
+                List<Student> studentList =
+                        em.createQuery("FROM Student ", Student.class).getResultList();
+                for (Student s : studentList) {
+                    System.out.println(s);
+                }
+                em.getTransaction().commit();
+            } catch (Exception e) {
+                if (em.getTransaction() != null)
+                    em.getTransaction().rollback();
+                throw e;
+            }
+
+            try {
+                em.getTransaction().begin();
+                List<Student> studentList =
+                        em.createQuery("FROM Student s INNER JOIN s.group g WHERE g.name=:group_name", Student.class).setParameter("group_name", "UVP-212").getResultList();
+                for (Student s : studentList) {
+                    System.out.println(s);
+                }
+                em.getTransaction().commit();
+            } catch (Exception e) {
+                if (em.getTransaction() != null)
+                    em.getTransaction().rollback();
+                throw e;
+            }
+
+        } // session.close()
+
+
+
+
+    }
+}
