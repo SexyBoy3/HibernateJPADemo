@@ -4,6 +4,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "Plane")
 public class Plane extends Vehicle{
@@ -11,8 +13,8 @@ public class Plane extends Vehicle{
     public Plane() {
     }
 
-    public Plane(String model, int passengerCapacity) {
-        super(model);
+    public Plane(String type, String model, BigDecimal price, String fueltype, int passengerCapacity) {
+        super(type, model , price , fueltype);
         this.passengerCapacity = passengerCapacity;
     }
 
@@ -29,7 +31,7 @@ public class Plane extends Vehicle{
 
     @Override
     public String toString() {
-        return "Car { id=" + id + ", type=" + type + ", model=" + model + ", price="+ price +
-                ", fuel type=" + fueltype+ ", passengerCapacity="+ passengerCapacity +" }";
+        return "Car { id="  + ", type=" + type + ", model=" + model + ", price="+ price +
+                ", fuel type="+ ", passengerCapacity="+ passengerCapacity +" }";
     }
 }

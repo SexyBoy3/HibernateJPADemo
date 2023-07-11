@@ -11,10 +11,7 @@ public class Truck extends Vehicle{
     protected Truck() {
     }
 
-    public Truck(String model, Double loadCapacity) {
-        super(model);
-        this.loadCapacity = loadCapacity;
-    }
+
 
     @Column(name = "loadCapacity",length = 50, nullable = false)
     private Double loadCapacity;
@@ -28,7 +25,7 @@ public class Truck extends Vehicle{
     }
     @Override
     public String toString() {
-        return "Car { id=" + id + ", type=" + type + ", model=" + model + ", price="+ price +
-                ", fuel type=" + fueltype+ ", loadCapacity="+ loadCapacity +" }";
+        return "Car { id="  + ", type=" + type + ", model=" + model + ", price="+ price +
+                ", fuel type=" + ", loadCapacity="+ loadCapacity +" }";
     }
 }

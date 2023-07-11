@@ -5,10 +5,6 @@ import org.hibernate.annotations.Cascade;
 @Entity
 @Table(name = "Car")
 public class Car extends Vehicle {
-    public Car(String model, int seats) {
-        super(model);
-        this.seats = seats;
-    }
 
     // Для hybernate
     protected Car() {
@@ -27,8 +23,8 @@ public class Car extends Vehicle {
 
     @Override
     public String toString() {
-        return "Car { id=" + id + ", type=" + type + ", model=" + model + ", price="+ price +
-                ", fuel type=" + fueltype+ ", seats="+ seats +" }";
+        return "Car { id="  + ", type=" + type + ", model=" + model + ", price="+ price +
+                ", fuel type=" + ", seats="+ seats +" }";
     }
 
 

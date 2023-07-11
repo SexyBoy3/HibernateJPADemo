@@ -4,70 +4,45 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
-@MappedSuperclass
+@Entity
+@Table(name = "Vehicle")
+@Inheritance(strategy = InheritanceType.JOINED)
+
 public abstract class Vehicle {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "id")
-    protected int id;
-
-    public Vehicle(String model) {
-        this.model = model;
-    }
-    //Для hybernate
-    protected Vehicle(){
-
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    protected void setId(int id) {
-        this.id = id;
-    }
-
-    @Column(name = "type"  ,length = 50, nullable = false)
+    private Long id;
+    @Column(name="type",length = 255,nullable = false)
     protected String type;
-
-    public String getType() {
-        return type;
-    }
-
-    protected void setType(String type) {
-        this.type = type;
-    }
-    @Column(name = "model",length = 50, nullable = false)
+    @Column(name="model",length = 255,nullable = false)
     protected String model;
-
-    public String getModel() {
-        return model;
-    }
-
-    protected void setModel(String model) {
-        this.model = model;
-    }
-
-    @Column(name = "price",length = 50, nullable = false)
+    @Column(name="price",length = 255,nullable = false)
     protected BigDecimal price;
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    protected void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    @Column(name = "fueltype",length = 50, nullable = false)
+    @Column(name="fueltype",length = 255,nullable = false)
     protected String fueltype;
 
-    public String getFueltype() {
-        return fueltype;
+    protected Vehicle(String type,String model,BigDecimal price,String fueltype){
+        this.type=type;
+        this.model=model;
+        this.price=price;
+        this.fueltype=fueltype;
     }
+    protected Vehicle(){}
 
-    protected void setFueltype(String fueltype) {
-        this.fueltype = fueltype;
+    public Long getId() {
+        return id;
     }
+    protected void setId(Long id) {
+        this.id = id;
+    }
+    public String getType() {return type;}
+    public void setType(String type) {this.type = type;}
+    public String getModel() {return model;}
+    public void setModel(String model) {this.model = model;}
+    public BigDecimal getPrice() {return price;}
+    public void setPrice(BigDecimal price) {this.price = price;}
+    public String getFueltypel() {return fueltype;}
+    public void setFueltypel(String fueltypel) {this.fueltype = fueltypel;}
 }
 
